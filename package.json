@@ -1,6 +1,6 @@
 {
   "name": "bower-octoblu-device-schema-transmogrifier",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "The schemas. Transmogrify them. In Bower.",
   "main": "index.js",
   "scripts": {
