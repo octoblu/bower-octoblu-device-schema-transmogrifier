@@ -27,7 +27,9 @@ module.exports = (function(_this) {
         device.schemas = {
           version: '1.0.0'
         };
-        _.set(device, 'schemas.message.default', messageSchema);
+        if (messageSchema != null) {
+          _.set(device, 'schemas.message.default', messageSchema);
+        }
         return device;
       };
 
