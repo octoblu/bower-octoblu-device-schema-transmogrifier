@@ -1,1 +1,51 @@
-!function e(r,i,t){function s(o,c){if(!i[o]){if(!r[o]){var a="function"==typeof require&&require;if(!c&&a)return a(o,!0);if(n)return n(o,!0);var u=new Error("Cannot find module '"+o+"'");throw u.code="MODULE_NOT_FOUND",u}var m=i[o]={exports:{}};r[o][0].call(m.exports,function(e){var i=r[o][1][e];return s(i?i:e)},m,m.exports,e,r,i,t)}return i[o].exports}for(var n="function"==typeof require&&require,o=0;o<t.length;o++)s(t[o]);return s}({1:[function(e,r,i){window.OctobluDeviceSchemaTransmogrifier=e("octoblu-device-schema-transmogrifier/src/transmogrifier")(window._)},{"octoblu-device-schema-transmogrifier/src/transmogrifier":2}],2:[function(e,r,i){var t=function(e,r){return function(){return e.apply(r,arguments)}};r.exports=function(e){return function(r){var i;return i=function(){function i(i){if(e._migrateMessageSchema=t(e._migrateMessageSchema,this),e.transmogrify=t(e.transmogrify,this),null==i)throw new Error("Someone tried to transmogrify an undefined device! Stop doing that.");this.device=r.clone(i),this.device.schemas=r.cloneDeep(i.schemas)}return i.prototype.transmogrify=function(){return"1.0.0"===r.get(this.device,"schemas.version")?this.device:(r.set(this.device,"schemas.version","1.0.0"),this._migrateMessageSchema(),this.device)},i.prototype._migrateMessageSchema=function(){var e,i;return i=this.device.messageSchema,delete this.device.messageSchema,null==(e=this.device.schemas).messages&&(e.messages=[]),r.isArray(i)?this.device.schemas.messages=i:this.device.schemas.messages.push(i)},i}()}}(this)},{}]},{},[1]);
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+window.OctobluDeviceSchemaTransmogrifier = require('octoblu-device-schema-transmogrifier/src/transmogrifier')(window._);
+
+},{"octoblu-device-schema-transmogrifier/src/transmogrifier":2}],2:[function(require,module,exports){
+var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+module.exports = (function(_this) {
+  return function(_) {
+    var OctobluDeviceSchemaTransmogrifier;
+    OctobluDeviceSchemaTransmogrifier = (function() {
+      function OctobluDeviceSchemaTransmogrifier(oldDevice) {
+        _this._migrateMessageSchema = bind(_this._migrateMessageSchema, this);
+        _this.transmogrify = bind(_this.transmogrify, this);
+        if (oldDevice == null) {
+          throw new Error('Someone tried to transmogrify an undefined device! Stop doing that.');
+        }
+        this.device = _.clone(oldDevice);
+        this.device.schemas = _.cloneDeep(oldDevice.schemas);
+      }
+
+      OctobluDeviceSchemaTransmogrifier.prototype.transmogrify = function() {
+        if (_.get(this.device, 'schemas.version') === '1.0.0') {
+          return this.device;
+        }
+        _.set(this.device, 'schemas.version', '1.0.0');
+        this._migrateMessageSchema();
+        return this.device;
+      };
+
+      OctobluDeviceSchemaTransmogrifier.prototype._migrateMessageSchema = function() {
+        var base, messageSchema;
+        messageSchema = this.device.messageSchema;
+        delete this.device.messageSchema;
+        if ((base = this.device.schemas).messages == null) {
+          base.messages = [];
+        }
+        if (_.isArray(messageSchema)) {
+          return this.device.schemas.messages = messageSchema;
+        }
+        return this.device.schemas.messages.push(messageSchema);
+      };
+
+      return OctobluDeviceSchemaTransmogrifier;
+
+    })();
+    return OctobluDeviceSchemaTransmogrifier;
+  };
+})(this);
+
+
+},{}]},{},[1]);

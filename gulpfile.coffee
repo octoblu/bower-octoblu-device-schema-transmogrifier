@@ -14,7 +14,6 @@ gulp.task 'build', ->
       .pipe plumber()
       .pipe coffeeify()
       .pipe concat('octoblu-device-schema-transmogrifier.js')
-      .pipe uglify()
       .pipe gulp.dest('./dist/')
 
 gulp.task 'build-deps', ['bower'], ->
