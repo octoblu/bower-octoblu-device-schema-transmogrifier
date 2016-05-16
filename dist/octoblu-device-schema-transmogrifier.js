@@ -8,36 +8,29 @@ module.exports = (function(_this) {
   return function(_) {
     var OctobluDeviceSchemaTransmogrifier;
     OctobluDeviceSchemaTransmogrifier = (function() {
-      function OctobluDeviceSchemaTransmogrifier(oldDevice) {
-        _this._migrateMessageSchema = bind(_this._migrateMessageSchema, this);
+      function OctobluDeviceSchemaTransmogrifier(device1) {
+        this.device = device1;
         _this.transmogrify = bind(_this.transmogrify, this);
-        if (oldDevice == null) {
+        if (this.device == null) {
           throw new Error('Someone tried to transmogrify an undefined device! Stop doing that.');
         }
-        this.device = _.clone(oldDevice);
-        this.device.schemas = _.cloneDeep(oldDevice.schemas);
       }
 
       OctobluDeviceSchemaTransmogrifier.prototype.transmogrify = function() {
-        if (_.get(this.device, 'schemas.version') === '1.0.0') {
-          return this.device;
+        var device, messageSchema;
+        device = _.cloneDeep(this.device);
+        if (_.get(device, 'schemas.version') === '1.0.0') {
+          return device;
         }
-        _.set(this.device, 'schemas.version', '1.0.0');
-        this._migrateMessageSchema();
-        return this.device;
-      };
-
-      OctobluDeviceSchemaTransmogrifier.prototype._migrateMessageSchema = function() {
-        var base, messageSchema;
-        messageSchema = this.device.messageSchema;
-        delete this.device.messageSchema;
-        if ((base = this.device.schemas).message == null) {
-          base.message = [];
-        }
-        if (_.isArray(messageSchema)) {
-          return this.device.schemas.message = messageSchema;
-        }
-        return this.device.schemas.message.push(messageSchema);
+        messageSchema = device.messageSchema;
+        delete device.messageSchema;
+        device.schemas = {
+          version: '1.0.0',
+          message: {
+            "default": messageSchema
+          }
+        };
+        return device;
       };
 
       return OctobluDeviceSchemaTransmogrifier;
