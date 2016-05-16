@@ -31,13 +31,13 @@ module.exports = (function(_this) {
         var base, messageSchema;
         messageSchema = this.device.messageSchema;
         delete this.device.messageSchema;
-        if ((base = this.device.schemas).messages == null) {
-          base.messages = [];
+        if ((base = this.device.schemas).message == null) {
+          base.message = [];
         }
         if (_.isArray(messageSchema)) {
-          return this.device.schemas.messages = messageSchema;
+          return this.device.schemas.message = messageSchema;
         }
-        return this.device.schemas.messages.push(messageSchema);
+        return this.device.schemas.message.push(messageSchema);
       };
 
       return OctobluDeviceSchemaTransmogrifier;
