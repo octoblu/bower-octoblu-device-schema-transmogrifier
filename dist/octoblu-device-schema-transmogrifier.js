@@ -25,11 +25,9 @@ module.exports = (function(_this) {
         messageSchema = device.messageSchema;
         delete device.messageSchema;
         device.schemas = {
-          version: '1.0.0',
-          message: {
-            "default": messageSchema
-          }
+          version: '1.0.0'
         };
+        _.set(device, 'schemas.message.default', messageSchema);
         return device;
       };
 
