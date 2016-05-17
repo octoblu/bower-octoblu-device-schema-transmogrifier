@@ -10,6 +10,8 @@ module.exports = (function(_this) {
     OctobluDeviceSchemaTransmogrifier = (function() {
       function OctobluDeviceSchemaTransmogrifier(device1) {
         this.device = device1;
+        _this._getFormMessageSchemaPortion = bind(_this._getFormMessageSchemaPortion, this);
+        _this.migratedSchemas = bind(_this.migratedSchemas, this);
         _this.transmogrify = bind(_this.transmogrify, this);
         if (this.device == null) {
           throw new Error('Someone tried to transmogrify an undefined device! Stop doing that.');
@@ -17,20 +19,50 @@ module.exports = (function(_this) {
       }
 
       OctobluDeviceSchemaTransmogrifier.prototype.transmogrify = function() {
-        var device, messageSchema;
-        device = _.cloneDeep(this.device);
-        if (_.get(device, 'schemas.version') === '1.0.0') {
-          return device;
+        var device;
+        if (_.get(this.device, 'schemas.version') === '1.0.0') {
+          return _.cloneDeep(this.device);
         }
-        messageSchema = device.messageSchema;
-        delete device.messageSchema;
-        device.schemas = {
-          version: '1.0.0'
+        device = this.migratedSchemas(this.device);
+        return _.omit(device, 'messageSchema', 'messageFormSchema', 'optionsSchema');
+      };
+
+      OctobluDeviceSchemaTransmogrifier.prototype.migratedSchemas = function(device) {
+        device = _.cloneDeep(device);
+        return _.assign(device, {
+          schemas: {
+            version: '1.0.0',
+            message: {
+              "default": _.assign(device.messageSchema, this._getFormMessageSchemaPortion(device))
+            },
+            configure: {
+              "default": {
+                type: 'object',
+                properties: {
+                  options: device.optionsSchema
+                }
+              }
+            },
+            form: {
+              message: {
+                "default": {
+                  angular: device.messageFormSchema
+                }
+              }
+            }
+          }
+        });
+      };
+
+      OctobluDeviceSchemaTransmogrifier.prototype._getFormMessageSchemaPortion = function(device) {
+        if (!device.messageFormSchema) {
+          return {};
+        }
+        return {
+          formSchema: {
+            angular: 'message.default.angular'
+          }
         };
-        if (messageSchema != null) {
-          _.set(device, 'schemas.message.default', messageSchema);
-        }
-        return device;
       };
 
       return OctobluDeviceSchemaTransmogrifier;
