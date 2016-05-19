@@ -59,7 +59,7 @@ module.exports = (function(_this) {
           return {};
         }
         return {
-          formSchema: {
+          'x-form-schema': {
             angular: 'message.default.angular'
           }
         };
