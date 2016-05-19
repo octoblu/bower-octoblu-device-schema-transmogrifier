@@ -1,6 +1,6 @@
 {
   "name": "bower-octoblu-device-schema-transmogrifier",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "The schemas. Transmogrify them. In Bower.",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/octoblu/bower-octoblu-device-schema-transmogrifier#readme",
   "dependencies": {
-    "octoblu-device-schema-transmogrifier": "^6.0.0"
+    "octoblu-device-schema-transmogrifier": "^6.0.1"
   },
   "devDependencies": {
     "coffee-script": "^1.10.0",
