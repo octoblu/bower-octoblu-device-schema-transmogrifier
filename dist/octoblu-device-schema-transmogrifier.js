@@ -11,6 +11,9 @@ module.exports = (function(_this) {
       function OctobluDeviceSchemaTransmogrifier(device1) {
         this.device = device1;
         _this._getFormMessageSchemaPortion = bind(_this._getFormMessageSchemaPortion, this);
+        _this._getMessageSchema = bind(_this._getMessageSchema, this);
+        _this._getFormSchema = bind(_this._getFormSchema, this);
+        _this._getConfigureSchema = bind(_this._getConfigureSchema, this);
         _this.migratedSchemas = bind(_this.migratedSchemas, this);
         _this.transmogrify = bind(_this.transmogrify, this);
         if (this.device == null) {
@@ -32,26 +35,47 @@ module.exports = (function(_this) {
         return _.assign(device, {
           schemas: {
             version: '1.0.0',
-            message: {
-              "default": _.assign(device.messageSchema, this._getFormMessageSchemaPortion(device))
-            },
-            configure: {
-              "default": {
-                type: 'object',
-                properties: {
-                  options: device.optionsSchema
-                }
-              }
-            },
-            form: {
-              message: {
-                "default": {
-                  angular: device.messageFormSchema
-                }
-              }
-            }
+            message: this._getMessageSchema(device),
+            configure: this._getConfigureSchema(device),
+            form: this._getFormSchema(device)
           }
         });
+      };
+
+      OctobluDeviceSchemaTransmogrifier.prototype._getConfigureSchema = function(device) {
+        if (_.isEmpty(device.optionsSchema)) {
+          return {};
+        }
+        return {
+          "default": {
+            type: 'object',
+            properties: {
+              options: device.optionsSchema
+            }
+          }
+        };
+      };
+
+      OctobluDeviceSchemaTransmogrifier.prototype._getFormSchema = function(device) {
+        if (_.isEmpty(device.messageFormSchema)) {
+          return {};
+        }
+        return {
+          message: {
+            "default": {
+              angular: device.messageFormSchema
+            }
+          }
+        };
+      };
+
+      OctobluDeviceSchemaTransmogrifier.prototype._getMessageSchema = function(device) {
+        if (_.isEmpty(device.messageSchema)) {
+          return {};
+        }
+        return {
+          "default": _.assign({}, device.messageSchema, this._getFormMessageSchemaPortion(device))
+        };
       };
 
       OctobluDeviceSchemaTransmogrifier.prototype._getFormMessageSchemaPortion = function(device) {
