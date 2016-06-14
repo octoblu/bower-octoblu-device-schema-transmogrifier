@@ -26,6 +26,9 @@ module.exports = (function(_this) {
         if (_.get(this.device, 'schemas.version') === '1.0.0') {
           return _.cloneDeep(this.device);
         }
+        if (_.get(this.device, 'schemas.version') === '2.0.0') {
+          return _.cloneDeep(this.device);
+        }
         device = this.migratedSchemas(this.device);
         return _.omit(device, 'messageSchema', 'messageFormSchema', 'optionsSchema');
       };
