@@ -1875,9 +1875,9 @@ object.omit@^2.0.0:
     for-own "^0.1.4"
     is-extendable "^0.1.1"
 
-octoblu-device-schema-transmogrifier@^6.1.1:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/octoblu-device-schema-transmogrifier/-/octoblu-device-schema-transmogrifier-6.1.1.tgz#e171eac33cb1f36332a6ae6088c4cd5de239cac2"
+octoblu-device-schema-transmogrifier@^6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/octoblu-device-schema-transmogrifier/-/octoblu-device-schema-transmogrifier-6.1.2.tgz#3ff37b942f5076e3fa1d030a523e4b592638875e"
   dependencies:
     coffee-script "^1.10.0"
     coffeeify "^2.0.1"

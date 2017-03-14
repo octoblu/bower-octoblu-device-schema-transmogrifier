@@ -27,4 +27,4 @@ gulp.task 'clean', ->
   gulp.src './dist/', read: false
       .pipe clean()
 
-gulp.task 'default', ['build']
+gulp.task 'default', ['build', 'build-deps']
