@@ -2,24 +2,12 @@
   "name": "octoblu-device-schema-transmogrifier",
   "description": "The schemas. Transmogrify them. In Bower.",
   "main": "dist/octoblu-device-schema-transmogrifier.js",
-  "authors": [
-    "Octoblu",
-    "Inc."
-  ],
+  "authors": ["Octoblu", "Inc."],
   "license": "MIT",
-  "keywords": [
-    "octoblu",
-    "json-schema"
-  ],
+  "keywords": ["octoblu", "json-schema"],
   "homepage": "https://github.com/octoblu/bower-octoblu-device-schema-transmogrifier",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
+  "ignore": ["**/.*", "node_modules", "bower_components", "test", "tests"],
   "dependencies": {
-    "lodash": "4.17.4"
+    "lodash": "3.10.1"
   }
 }
